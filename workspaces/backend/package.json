@@ -5,11 +5,14 @@
   "license": "MIT",
   "dependencies": {
     "koa": "^2.11.0",
+    "koa-body": "^4.1.1",
+    "koa-csrf": "^3.0.8",
     "koa-router": "^7.4.0",
     "neo4j-driver": "^4.0.1"
   },
   "devDependencies": {
     "@types/koa": "^2.11.0",
+    "@types/koa-csrf": "^3.0.1",
     "@types/koa-router": "^7.0.42",
     "@typescript-eslint/eslint-plugin": "^2.14.0",
     "@typescript-eslint/parser": "^2.14.0",
