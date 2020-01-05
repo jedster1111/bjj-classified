@@ -25,6 +25,7 @@
     "typescript": "^3.7.4"
   },
   "scripts": {
-    "start": "nodemon ./src/server.ts"
+    "start": "nodemon ./src/server.ts",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src"
   }
 }
