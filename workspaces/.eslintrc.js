@@ -1,3 +1,3 @@
 const defaultSettings = require("../.eslintrc.js");
 
-module.exports =  defaultSettings;
+module.exports = { ...defaultSettings, env: { node: true } };
