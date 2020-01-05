@@ -1,10 +1,13 @@
 import Koa from "koa";
 import Router from "koa-router";
 import bodyParser from "koa-body";
+import cors from "@koa/cors";
 import CSRF from "koa-csrf";
 import neo4j from "neo4j-driver";
 
 import { logger } from "./middleware/logger";
+
+const PORT = 8000;
 
 const driver = neo4j.driver(
   "bolt://localhost:7687",
@@ -18,17 +21,22 @@ const app = new Koa();
 
 app.use(logger());
 app.use(bodyParser());
-app.use(new CSRF());
+app.use(cors());
+app.use(new CSRF({ disableQuery: false }));
 
 const router = new Router();
-router.get("/*", async ctx => {
-  ctx.body = "Hello World!";
+router.get("/athletes", async ctx => {
+  const result = await session.run(`MATCH(athletes:Athlete) RETURN athletes`);
+  const athleteNames = result.records.map(
+    record => record.get("athletes").properties.name
+  );
+  ctx.body = athleteNames;
 });
 app.use(router.routes());
 
-app.listen(3000);
+app.listen(PORT);
 
-console.log("Server running on port 3000");
+console.log(`Server running on port ${PORT}!`);
 
 async function initData(): Promise<void> {
   try {
@@ -46,7 +54,6 @@ async function initData(): Promise<void> {
       }
     );
 
-    session.close();
     const singleRecord = result.records[0];
     const athlete = singleRecord.get("a");
     const gym = singleRecord.get("g");

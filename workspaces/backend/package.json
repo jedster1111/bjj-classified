@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@koa/cors": "^3.0.0",
     "koa": "^2.11.0",
     "koa-body": "^4.1.1",
     "koa-csrf": "^3.0.8",
@@ -14,6 +15,7 @@
     "@types/koa": "^2.11.0",
     "@types/koa-csrf": "^3.0.1",
     "@types/koa-router": "^7.0.42",
+    "@types/koa__cors": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^2.14.0",
     "@typescript-eslint/parser": "^2.14.0",
     "eslint": "^6.8.0",
@@ -25,7 +27,7 @@
     "typescript": "^3.7.4"
   },
   "scripts": {
-    "start": "nodemon ./src/server.ts",
+    "start": "nodemon",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src"
   }
 }

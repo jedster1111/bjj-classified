@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import { getAthletes } from "./api";
 
 const App: React.FC = () => {
+  const [athletes, setAthletes] = useState<string[]>([]);
+
+  useEffect(() => {
+    const getAndSetAthletes = async (): Promise<void> => {
+      const athletes = await getAthletes();
+      setAthletes(athletes);
+    };
+
+    getAndSetAthletes();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -10,14 +22,7 @@ const App: React.FC = () => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {athletes.join(", ")}
       </header>
     </div>
   );
