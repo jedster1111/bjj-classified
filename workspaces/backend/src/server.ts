@@ -4,8 +4,7 @@ import bodyParser from "koa-body";
 import cors from "@koa/cors";
 import CSRF from "koa-csrf";
 import neo4j from "neo4j-driver";
-
-import { logger } from "./middleware/logger";
+import logger from "koa-logger";
 
 const PORT = 8000;
 
@@ -15,14 +14,12 @@ const driver = neo4j.driver(
 );
 const session = driver.session();
 
-initData();
-
 const app = new Koa();
 
 app.use(logger());
 app.use(bodyParser());
 app.use(cors());
-app.use(new CSRF({ disableQuery: false }));
+app.use(new CSRF());
 
 const router = new Router();
 router.get("/athletes", async ctx => {
@@ -37,30 +34,3 @@ app.use(router.routes());
 app.listen(PORT);
 
 console.log(`Server running on port ${PORT}!`);
-
-async function initData(): Promise<void> {
-  try {
-    console.log("Deleting all nodes");
-    await session.run(`MATCH (n) DETACH DELETE n`);
-
-    console.log("Creating initial data");
-    const result = await session.run(
-      `
-      CREATE (a:Athlete {name: $name})-[:TRAINS_AT]->(g:Gym {name: $gym})
-      RETURN a, g`,
-      {
-        name: "Jed",
-        gym: "Carlson Gracie London"
-      }
-    );
-
-    const singleRecord = result.records[0];
-    const athlete = singleRecord.get("a");
-    const gym = singleRecord.get("g");
-    console.log(athlete.properties.name, "trains at", gym.properties.name);
-
-    driver.close();
-  } catch (e) {
-    console.log(e);
-  }
-}
