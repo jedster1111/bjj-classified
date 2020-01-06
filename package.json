@@ -9,6 +9,7 @@
     "workspaces/*"
   ],
   "scripts": {
-    "lint": "yarn workspaces run lint"
+    "lint": "yarn workspaces run lint",
+    "test": "yarn workspaces run test"
   }
 }

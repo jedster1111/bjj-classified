@@ -1,5 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
+  env: {"jest": true},
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
