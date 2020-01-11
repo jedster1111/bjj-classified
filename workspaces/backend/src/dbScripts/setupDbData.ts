@@ -25,19 +25,55 @@ async function initData(): Promise<void> {
   try {
     console.log("Creating initial data");
 
+    await session.run(
+      `CREATE CONSTRAINT ON (athlete:Athlete) ASSERT exists(athlete.name)`
+    );
+    await session.run(
+      `CREATE CONSTRAINT ON (video:Video) ASSERT exists(video.url);`
+    );
+    await session.run(
+      `CREATE CONSTRAINT ON (gym:Gym) ASSERT exists(gym.name);`
+    );
+    await session.run(
+      `CREATE CONSTRAINT ON (video:Video) ASSERT exists(video.url);`
+    );
+    await session.run(
+      `CREATE CONSTRAINT ON (technique:Technique) ASSERT exists(technique.name);`
+    );
+
     await session.run(`
-      CREATE (jed:Athlete {name: "Jed Thompson"})
-      CREATE (joy:Athlete {name: "Joy Li"})
-      CREATE (josh:Athlete {name: "Josh Lee"})
-      CREATE (harry:Athlete {name: "Harry Lewis"})
+      CREATE
+        (jed:Athlete {name: "Jed Thompson"}),
+        (joy:Athlete {name: "Joy Li"}),
+        (josh:Athlete {name: "Josh Lee"}),
+        (harry:Athlete {name: "Harry Lewis"}),
 
-      CREATE (carlson:Gym {name: "Carlson Gracie London"})
-      CREATE (gracie:Gym {name: "Gracie Barra London"})
+        (carlson:Gym {name: "Carlson Gracie London"}),
+        (gracie:Gym {name: "Gracie Barra London"}),
 
-      CREATE (jed)-[:TRAINS_AT]->(carlson)
-      CREATE (joy)-[:TRAINS_AT]->(carlson)
-      CREATE (josh)-[:TRAINS_AT]->(carlson)
-      CREATE (harry)-[:TRAINS_AT]->(gracie)
+        (jed)-[:TRAINS_AT]->(carlson),
+        (joy)-[:TRAINS_AT]->(carlson),
+        (josh)-[:TRAINS_AT]->(carlson),
+        (harry)-[:TRAINS_AT]->(gracie),
+
+        (video:Video {url: "https://youtu.be/8Q1uvJw2hGs"}),
+        (match:Match {location: "London Open"}),
+
+        (video)-[:VIDEO_OF]->(match),
+
+        (triangle:Technique {name: "Triangle Choke"}),
+        (armbar:Technique {name: "Armbar"}),
+
+        (event1:Event {name: "Triangle Choke", time: 3}),
+        (event2:Event {name: "Armbar", time: 6}),
+
+        (event1)-[:TRANSITIONS_TO]->(event2),
+
+        (event1)-[:SHOWN_IN]->(video),
+        (event2)-[:SHOWN_IN]->(video),
+
+        (event1)-[:EXECUTED_IN]->(match),
+        (event2)-[:EXECUTED_IN]->(match)
     `);
   } catch (e) {
     console.log(e);
