@@ -69,8 +69,8 @@ async function initData(): Promise<void> {
 
         (event1)-[:TRANSITIONS_TO]->(event2),
 
-        (event1)-[:SHOWN_IN]->(video),
-        (event2)-[:SHOWN_IN]->(video),
+        (event1)-[:WATCHABLE_IN]->(video),
+        (event2)-[:WATCHABLE_IN]->(video),
 
         (event1)-[:EXECUTED_IN]->(match),
         (event2)-[:EXECUTED_IN]->(match)
