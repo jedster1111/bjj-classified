@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { getAthletes, getVideos } from "./api";
+import ReactPlayer from "react-player";
 
 function useGetOnMount<T>(getFn: () => Promise<T>): T | undefined {
   const [result, setResult] = useState<T>();
@@ -22,6 +23,14 @@ const App: React.FC = () => {
   const athletes = useGetOnMount(getAthletes);
   const videos = useGetOnMount(getVideos);
 
+  const playerRef = useRef<ReactPlayer>() as React.MutableRefObject<
+    ReactPlayer
+  >; //TODO: Dirty hack
+
+  const handleSkip = (): void => {
+    playerRef.current.seekTo(35);
+  };
+
   if (!athletes || !videos) return <p>Loading</p>;
 
   return (
@@ -38,7 +47,8 @@ const App: React.FC = () => {
           Videos:{" "}
           {videos.map((url, i) => (
             <li key={i}>
-              <a href={url}>{url}</a>
+              <ReactPlayer ref={playerRef} url={url} controls />
+              <button onClick={handleSkip}>Skip to 35s</button>
             </li>
           ))}
         </ul>
