@@ -35,7 +35,7 @@ async function initData(): Promise<void> {
       `CREATE CONSTRAINT ON (gym:Gym) ASSERT exists(gym.name);`
     );
     await session.run(
-      `CREATE CONSTRAINT ON (video:Video) ASSERT exists(video.url);`
+      `CREATE CONSTRAINT ON (tournament:Tournament) ASSERT exists(tournament.name);`
     );
     await session.run(
       `CREATE CONSTRAINT ON (technique:Technique) ASSERT exists(technique.name);`
@@ -57,23 +57,28 @@ async function initData(): Promise<void> {
         (harry)-[:TRAINS_AT]->(gracie),
 
         (video:Video {url: "https://youtu.be/8Q1uvJw2hGs"}),
-        (match:Match {location: "London Open"}),
+        (tournament:Tournament {name: "London Open 2019"}),
+        (match:Match),
 
+        (match)-[:TOOK_PLACE_IN]->(tournament),
         (video)-[:VIDEO_OF]->(match),
+
+        (jed)-[:COMPETED_IN {result: "won"}]->(match),
+        (harry)-[:COMPETED_IN {result: "lost"}]->(match),
 
         (triangle:Technique {name: "Triangle Choke"}),
         (armbar:Technique {name: "Armbar"}),
 
-        (event1:Event {name: "Triangle Choke", time: 3}),
-        (event2:Event {name: "Armbar", time: 6}),
+        (event1:Event {name: "Triangle Choke"}),
+        (event2:Event {name: "Armbar"}),
 
         (event1)-[:TRANSITIONS_TO]->(event2),
 
-        (event1)-[:WATCHABLE_IN]->(video),
-        (event2)-[:WATCHABLE_IN]->(video),
+        (event1)-[:WATCHABLE_IN {time: 3}]->(video),
+        (event2)-[:WATCHABLE_IN {time: 6}]->(video),
 
-        (event1)-[:EXECUTED_IN]->(match),
-        (event2)-[:EXECUTED_IN]->(match)
+        (event1)-[:EXAMPLE_OF]->(triangle),
+        (event2)-[:EXAMPLE_OF]->(armbar)
     `);
   } catch (e) {
     console.log(e);
