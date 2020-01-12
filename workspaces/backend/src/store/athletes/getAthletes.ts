@@ -1,6 +1,6 @@
 import { Session } from "neo4j-driver/types/v1";
-import { AthleteDTO } from "../types";
-import { areValidAthletes } from "./predicates/athletes/areValidAthletes";
+import { AthleteDTO } from "../../types";
+import { areValidAthletes } from "./areValidAthletes";
 
 export async function getAthletes(session: Session): Promise<AthleteDTO[]> {
   const result = await session.run(`MATCH(athletes:Athlete) RETURN athletes`);

@@ -1,4 +1,4 @@
-import { AthleteDTO } from "../../../types";
+import { AthleteDTO } from "../../types";
 import { isValidAthlete } from "./isValidAthletes";
 
 export function areValidAthletes(
