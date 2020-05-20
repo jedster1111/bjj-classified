@@ -11,3 +11,9 @@ export async function getAthletes(): Promise<string[]> {
 export async function getVideos(): Promise<string[]> {
   return await makeGetRequest("videos");
 }
+export async function getVideo(): Promise<{
+  url: string;
+  events: { name: string; time: number }[];
+}> {
+  return await makeGetRequest("video");
+}

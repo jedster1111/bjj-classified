@@ -69,16 +69,19 @@ async function initData(): Promise<void> {
         (triangle:Technique {name: "Triangle Choke"}),
         (armbar:Technique {name: "Armbar"}),
 
-        (event1:Event {name: "Triangle Choke"}),
-        (event2:Event {name: "Armbar"}),
+        (event1:Event),
+        (event2:Event),
+        (event3:Event),
 
         (event1)-[:TRANSITIONS_TO]->(event2),
 
-        (event1)-[:WATCHABLE_IN {time: 3}]->(video),
-        (event2)-[:WATCHABLE_IN {time: 6}]->(video),
+        (event1)-[:WATCHABLE_IN {time: 30}]->(video),
+        (event2)-[:WATCHABLE_IN {time: 90}]->(video),
+        (event3)-[:WATCHABLE_IN {time: 100}]->(video),
 
         (event1)-[:EXAMPLE_OF]->(triangle),
-        (event2)-[:EXAMPLE_OF]->(armbar)
+        (event2)-[:EXAMPLE_OF]->(armbar),
+        (event3)-[:EXAMPLE_OF]->(triangle)
     `);
   } catch (e) {
     console.log(e);

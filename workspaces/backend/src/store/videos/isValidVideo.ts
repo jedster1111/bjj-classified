@@ -1,6 +1,6 @@
-import { VideoDTO } from "../../types";
+import { VideoStore } from "../../types";
 import { hasStringProp } from "../../common/validation/hasStringProp";
 
-export function isValidVideo(video: unknown): video is VideoDTO {
+export function isValidVideo(video: unknown): video is VideoStore {
   return hasStringProp(video, "url");
 }

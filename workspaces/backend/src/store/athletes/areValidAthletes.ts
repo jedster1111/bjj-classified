@@ -1,8 +1,8 @@
-import { AthleteDTO } from "../../types";
+import { AthleteStore } from "../../types";
 import { isValidAthlete } from "./isValidAthletes";
 
 export function areValidAthletes(
   athletes: unknown[]
-): athletes is AthleteDTO[] {
+): athletes is AthleteStore[] {
   return athletes.every(isValidAthlete);
 }
