@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig-base.json",
+  "compilerOptions": {
+    // "outDir": "dist",
+    "rootDir": "src",
+    "jsx": "react"
+  },
+  "references": [
+    {
+      "path": "../bjj-common"
+    }
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "webpack.config.ts"
+  ]
+}

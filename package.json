@@ -2,14 +2,12 @@
   "name": "bjj-classified",
   "version": "1.0.0",
   "main": "index.js",
+  "repository": "https://github.com/jedster1111/bjj-classified.git",
   "author": "Jed Thompson <jedster1111@hotmail.co.uk>",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "workspaces/*"
-  ],
-  "scripts": {
-    "lint": "yarn workspaces run lint",
-    "test": "yarn workspaces run test"
+  "workspaces": ["db-accessor", "bjj-common", "frontend"],
+  "devDependencies": {
+    "typescript": "^3.9.3"
   }
 }

@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "references": [
+    {"path": "./db-accessor"},
+    {"path": "./frontend"},
+    {"path": "./bjj-common"},
+  ]
+}
