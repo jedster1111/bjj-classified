@@ -1,16 +1,13 @@
 import Koa from "koa";
-import KoaRouter from "koa-router";
 import koaLogger from "koa-pino-logger";
 
 import { logger } from "./logger";
-
-import { meaningOfLife } from "bjj-common";
 import { setUpNeo4jConnection, cleanUpNeo4jConnection } from "./neo4jDriver";
+import { router } from "./router";
 
 const port = 8000;
 
 const app = new Koa();
-const router = new KoaRouter();
 
 app.use(koaLogger({
   prettyPrint: {
@@ -28,16 +25,8 @@ app.use(async (ctx, next) => {
   }
 })
 
-app.on('error', (err: Error, ctx: Koa.ParameterizedContext<Koa.DefaultState, Koa.DefaultContext>) => {
+app.on('error', (err: Error, ctx: Koa.ParameterizedContext) => {
   ctx.log.error(err)
-})
-
-router.get('meaningOfLife', "/meaningOfLife", ctx => {
-  ctx.log.info("Someone's looking for the meaning of life?")
-  ctx.body = `The meaning of life is ${meaningOfLife()}`
-});
-router.get('error', "/error", async ctx => {
-  ctx.throw(500, "This is an endpoint to test error handling!");
 })
 
 app.use(router.routes()).use(router.allowedMethods());
