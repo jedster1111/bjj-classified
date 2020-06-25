@@ -1,15 +1,18 @@
 import Koa from "koa";
 import KoaRouter from "koa-router";
-import pino from "koa-pino-logger";
+import koaLogger from "koa-pino-logger";
+
+import { logger } from "./logger";
 
 import { meaningOfLife } from "bjj-common";
+import { setUpNeo4jConnection, cleanUpNeo4jConnection } from "./neo4jDriver";
 
 const port = 8000;
 
 const app = new Koa();
 const router = new KoaRouter();
 
-app.use(pino({
+app.use(koaLogger({
   prettyPrint: {
     colorize: true
   }
@@ -39,4 +42,17 @@ router.get('error', "/error", async ctx => {
 
 app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+setUpNeo4jConnection().then(() => {
+  app.listen(port, () => logger.info(`Listening on port ${port}`));
+})
+
+function cleanup(signal: "SIGINT" | "SIGTERM") {
+  logger.info("%s received, cleaning up.", signal);
+  cleanUpNeo4jConnection().then(() => {
+    process.exit(1)
+  })
+
+}
+
+process.on('SIGINT', cleanup);
+process.on('SIGTERM', cleanup);
