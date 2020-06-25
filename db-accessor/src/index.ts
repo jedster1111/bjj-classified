@@ -31,10 +31,6 @@ app.on('error', (err: Error, ctx: Koa.ParameterizedContext) => {
 
 app.use(router.routes()).use(router.allowedMethods());
 
-setUpNeo4jConnection().then(() => {
-  app.listen(port, () => logger.info(`Listening on port ${port}`));
-})
-
 function cleanup(signal: "SIGINT" | "SIGTERM") {
   logger.info("%s received, cleaning up.", signal);
   cleanUpNeo4jConnection().then(() => {
@@ -45,3 +41,12 @@ function cleanup(signal: "SIGINT" | "SIGTERM") {
 
 process.on('SIGINT', cleanup);
 process.on('SIGTERM', cleanup);
+
+function main() {
+  logger.info("BJJ Classified: db-accessor initializing")
+  setUpNeo4jConnection().then(() => {
+    app.listen(port, () => logger.info(`Listening on port ${port}`));
+  })
+}
+
+main()
