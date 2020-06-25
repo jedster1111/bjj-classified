@@ -4,6 +4,7 @@ import koaLogger from "koa-pino-logger";
 import { logger } from "./logger";
 import { setUpNeo4jConnection, cleanUpNeo4jConnection } from "./neo4jDriver";
 import { router } from "./router";
+import { retry } from "bjj-common";
 
 const port = 8000;
 
@@ -42,11 +43,10 @@ function cleanup(signal: "SIGINT" | "SIGTERM") {
 process.on('SIGINT', cleanup);
 process.on('SIGTERM', cleanup);
 
-function main() {
+async function main() {
   logger.info("BJJ Classified: db-accessor initializing")
-  setUpNeo4jConnection().then(() => {
-    app.listen(port, () => logger.info(`Listening on port ${port}`));
-  })
+  app.listen(port, () => logger.info(`Listening on port ${port}`));
+  await retry(setUpNeo4jConnection, 5000);
 }
 
 main()

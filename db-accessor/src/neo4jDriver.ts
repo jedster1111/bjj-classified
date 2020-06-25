@@ -8,15 +8,24 @@ const neo4jPassword = "test";
 
 let driver: Driver | null = null;
 
-export async function setUpNeo4jConnection() {
-  driver = neo4j.driver(neo4jUrl, neo4j.auth.basic(neo4jUsername, neo4jPassword))
-  const connectionInfo = await driver.verifyConnectivity()
-  logger.info("Connected to the db successfully! Connection Info: %o", connectionInfo)
+export function getDriver() {
+  if (!driver) throw new Error("Connection to db hasn't been established yet.")
 
-  const session = driver.session();
-  await session.run("MERGE (p:Person { name:$name })", { name: "Adam" })
-  session.close();
-  logger.info("Created a person!")
+  return driver;
+}
+
+export async function setUpNeo4jConnection() {
+  try {
+    logger.info("Trying to connect to db at %s", neo4jUrl);
+    driver = neo4j.driver(neo4jUrl, neo4j.auth.basic(neo4jUsername, neo4jPassword));
+    const connectionInfo = await driver.verifyConnectivity();
+    logger.info("Connected to the db successfully! Connection Info: %o", connectionInfo);    
+
+    return driver;
+  } catch (e) {
+    logger.error(e, "Failed to connect to db!");
+    throw e
+  }
 }
 
 export async function cleanUpNeo4jConnection() {

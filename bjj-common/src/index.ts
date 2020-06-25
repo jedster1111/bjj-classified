@@ -1,1 +1,6 @@
-export const meaningOfLife = () => 42
+import { wait } from "./wait"
+import { retry } from "./retry"
+
+const meaningOfLife = () => 42
+
+export { wait, meaningOfLife, retry }
