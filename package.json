@@ -9,5 +9,9 @@
   "workspaces": ["db-accessor", "bjj-common", "frontend"],
   "devDependencies": {
     "typescript": "^3.9.3"
+  },
+  "scripts": {
+    "start-supporting-services": "docker-compose up -d",
+    "stop-supporting-services": "docker-compose down"
   }
 }
