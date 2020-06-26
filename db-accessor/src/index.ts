@@ -1,8 +1,9 @@
 import Koa from "koa";
 import koaLogger from "koa-pino-logger";
+import bodyParser from "koa-bodyparser"
 
 import { logger } from "./logger";
-import { setUpNeo4jConnection, cleanUpNeo4jConnection } from "./neo4jDriver";
+import { setUpNeo4jConnection, cleanUpNeo4jConnection } from "./store/neo4jDriver";
 import { router } from "./router";
 import { retry } from "bjj-common";
 
@@ -26,10 +27,7 @@ app.use(async (ctx, next) => {
   }
 })
 
-app.on('error', (err: Error, ctx: Koa.ParameterizedContext) => {
-  ctx.log.error(err)
-})
-
+app.use(bodyParser());
 app.use(router.routes()).use(router.allowedMethods());
 
 function cleanup(signal: "SIGINT" | "SIGTERM") {

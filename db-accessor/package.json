@@ -5,6 +5,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/koa": "^2.11.3",
+    "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-pino-logger": "^2.1.6",
     "@types/koa-router": "^7.4.1",
     "nodemon": "^2.0.4",
@@ -13,6 +14,7 @@
   "dependencies": {
     "bjj-common": "1.0.0",
     "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
     "koa-pino-logger": "^3.0.0",
     "koa-router": "^9.0.1",
     "neo4j-driver": "^4.1.0",

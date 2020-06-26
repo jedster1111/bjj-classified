@@ -1,6 +1,6 @@
 import neo4j, { Driver } from "neo4j-driver";
 
-import { logger } from "./logger";
+import { logger } from "../logger";
 
 const neo4jUrl = "bolt://127.0.0.1:7687"
 const neo4jUsername = "neo4j";
@@ -9,8 +9,6 @@ const neo4jPassword = "test";
 let driver: Driver | null = null;
 
 export function getDriver() {
-  if (!driver) throw new Error("Connection to db hasn't been established yet.")
-
   return driver;
 }
 
@@ -30,5 +28,6 @@ export async function setUpNeo4jConnection() {
 
 export async function cleanUpNeo4jConnection() {
   await driver?.close();
+  driver = null;
   logger.info("Shut down the database connection!")
 }
