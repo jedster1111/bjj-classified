@@ -18,10 +18,7 @@ export async function createMove(moveDto: DbMoveDto): Promise<MoveDto | Error> {
     })
   );
 
-  if (isError(result)) {
-    logger.error("Failed to create a move.");
-    return result;
-  }
+  if (isError(result)) return result;
 
   logger.info("Move created. %o", result);
   return result;

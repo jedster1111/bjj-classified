@@ -6,22 +6,41 @@ import { createMove } from "../store/move/store/createMove";
 import { logger } from "../logger";
 import { getMoves } from "../store/move/store/getMoves";
 import { uuid } from "uuidv4";
+import { getMove } from "../store/move/store/getMove";
 
-const move = new KoaRouter();
+const moves = new KoaRouter();
 
-move.get("getMoves", "/", async (ctx) => {
-  const moves = await getMoves();
+moves.get("getMoves", "/", async (ctx) => {
+  const fetchedMoves = await getMoves();
 
-  if (isError(moves)) {
-    logger.error(moves);
-    ctx.throw("Failed to get moves.");
+  if (isError(fetchedMoves)) {
+    logger.error(fetchedMoves);
+    ctx.throw("There was an error fetching the moves from the db.");
     return;
   }
 
-  ctx.body = moves;
+  ctx.body = fetchedMoves;
 });
 
-move.post("createMove", "/", async (ctx) => {
+moves.get("getMove", "/:id", async (ctx) => {
+  const { id } = ctx.params;
+  const fetchedMove = await getMove(id);
+
+  if (isError(fetchedMove)) {
+    logger.error(fetchedMove);
+    ctx.throw("There was an error fetching the move from the db.");
+    return;
+  }
+
+  if (!fetchedMove) {
+    ctx.status = 404;
+    return;
+  }
+
+  ctx.body = fetchedMove;
+});
+
+moves.post("createMove", "/", async (ctx) => {
   const validationResult = createMoveDtoValidator(ctx.request.body);
 
   if (isError(validationResult)) {
@@ -42,4 +61,4 @@ move.post("createMove", "/", async (ctx) => {
   ctx.body = createdMove;
 });
 
-export { move as moves };
+export { moves };
