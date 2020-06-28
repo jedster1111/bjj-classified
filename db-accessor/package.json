@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/cls-hooked": "^4.3.0",
     "@types/koa": "^2.11.3",
     "@types/koa-bodyparser": "^4.3.0",
     "@types/koa-pino-logger": "^2.1.6",
@@ -14,6 +15,8 @@
   },
   "dependencies": {
     "bjj-common": "1.0.0",
+    "cls-hooked": "^4.2.2",
+    "cls-proxify": "^1.0.1",
     "io-ts": "^2.2.6",
     "io-ts-reporters": "^1.2.0",
     "koa": "^2.13.0",
@@ -22,7 +25,8 @@
     "koa-router": "^9.0.1",
     "neo4j-driver": "^4.1.0",
     "pino": "^6.3.2",
-    "pino-pretty": "^4.0.0"
+    "pino-pretty": "^4.0.0",
+    "uuidv4": "^6.1.1"
   },
   "scripts": {
     "build": "tsc -b",

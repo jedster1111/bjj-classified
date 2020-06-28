@@ -3,11 +3,12 @@ import KoaRouter from "koa-router";
 import { meaningOfLife, isError } from "bjj-common";
 import { createMove } from "./store/move/moveStore";
 import { createMoveDtoValidator } from "./store/Dtos/validators";
+import { logger } from "./logger";
 
 const router = new KoaRouter();
 
 router.get('meaningOfLife', "/meaningOfLife", ctx => {
-  ctx.log.info("Someone's looking for the meaning of life?")
+  logger.info("Someone's looking for the meaning of life?")
   ctx.body = `The meaning of life is ${meaningOfLife()}`
 });
 
