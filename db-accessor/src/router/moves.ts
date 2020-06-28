@@ -1,10 +1,11 @@
 import KoaRouter from "koa-router";
 import { isError } from "bjj-common";
 
-import { createMoveDtoValidator } from "../store/Dtos/validators";
+import { createMoveDtoValidator } from "../store/move/validators";
 import { createMove } from "../store/move/store/createMove";
 import { logger } from "../logger";
 import { getMoves } from "../store/move/store/getMoves";
+import { uuid } from "uuidv4";
 
 const move = new KoaRouter();
 
@@ -28,7 +29,8 @@ move.post("createMove", "/", async (ctx) => {
     return;
   }
 
-  const createdMove = await createMove(validationResult);
+  const dbMoveDto = { id: uuid(), ...validationResult };
+  const createdMove = await createMove(dbMoveDto);
 
   if (isError(createdMove)) {
     logger.error(createdMove);

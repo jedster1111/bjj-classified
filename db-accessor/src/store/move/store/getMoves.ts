@@ -1,4 +1,4 @@
-import { MoveDto } from "../../Dtos/Move";
+import { MoveDto } from "../Move";
 import { logger } from "../../../logger";
 import { getDriver } from "../../neo4jDriver";
 import { useSession } from "../../useSession";

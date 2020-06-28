@@ -1,6 +1,7 @@
 import * as t from "io-ts";
 
 export type MoveDto = {
+  id: string;
   name: string;
 };
 
@@ -11,5 +12,6 @@ export const CreateMoveDtoCodec = t.type({
 export type CreateMoveDto = t.TypeOf<typeof CreateMoveDtoCodec>;
 
 export type DbMoveDto = {
+  id: string;
   name: string;
 };
