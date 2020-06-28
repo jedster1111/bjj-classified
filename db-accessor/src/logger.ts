@@ -1,13 +1,11 @@
 import pino from "pino";
-import { clsProxify,  } from 'cls-proxify'
-
-
+import { clsProxify } from "cls-proxify";
 
 export const originalLogger = pino({
   prettyPrint: {
-    colorize: true
-  }
-})
+    colorize: true,
+  },
+});
 
-export const loggerKey = 'clsKeyLogger';
+export const loggerKey = "clsKeyLogger";
 export const logger = clsProxify(loggerKey, originalLogger);
