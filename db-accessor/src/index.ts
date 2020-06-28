@@ -7,6 +7,7 @@ import { setUpNeo4jConnection, cleanUpNeo4jConnection } from "./store/neo4jDrive
 import { router } from "./router";
 import { retry } from "bjj-common";
 
+
 const port = 8000;
 
 const app = new Koa();
@@ -21,8 +22,7 @@ app.use(async (ctx, next) => {
   try {
     await next()
   } catch (err) {
-    ctx.status = err.status || 500;
-    ctx.body = err.message;
+    ctx.throw(err.status || 500, err.message)
     ctx.app.emit('error', err, ctx);
   }
 })
