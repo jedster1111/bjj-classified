@@ -1,9 +1,8 @@
 import KoaRouter from "koa-router";
 
-import { meaningOfLife, isError } from "bjj-common";
-import { createMove } from "./store/move/moveStore";
-import { createMoveDtoValidator } from "./store/Dtos/validators";
+import { meaningOfLife } from "bjj-common";
 import { logger } from "./logger";
+import { moves } from "./router/moves";
 
 const router = new KoaRouter();
 
@@ -16,23 +15,6 @@ router.get("error", "/error", async (ctx) => {
   ctx.throw("This is an endpoint to test error handling!");
 });
 
-router.post("createMove", "/createMove", async (ctx) => {
-  const validationResult = createMoveDtoValidator(ctx.request.body);
-
-  if (isError(validationResult)) {
-    ctx.throw(400, validationResult);
-    return;
-  }
-
-  const createdMove = await createMove(validationResult);
-
-  if (isError(createdMove)) {
-    ctx.throw("Failed to create move.");
-    return;
-  }
-
-  ctx.status = 201;
-  ctx.body = createdMove;
-});
+router.use("/moves", moves.routes(), moves.allowedMethods());
 
 export { router };

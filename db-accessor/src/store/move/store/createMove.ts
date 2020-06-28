@@ -1,11 +1,10 @@
-// import { createMove } from "./runs/createMove";
-
-import { getDriver } from "../neo4jDriver";
-import { logger } from "../../logger";
-import { runCreateMove } from "./runs/runCreateMove";
-import { useSession } from "../useSession";
-import { useTransaction } from "../useTransaction";
-import { MoveDto, CreateMoveDto } from "../Dtos/Move";
+import { getDriver } from "../../neo4jDriver";
+import { logger } from "../../../logger";
+import { runCreateMove } from "../runs/runCreateMove";
+import { useSession } from "../../useSession";
+import { useTransaction } from "../../useTransaction";
+import { MoveDto, CreateMoveDto } from "../../Dtos/Move";
+import { isError } from "bjj-common";
 
 export async function createMove(
   createMoveDto: CreateMoveDto
@@ -21,7 +20,7 @@ export async function createMove(
     })
   );
 
-  if (result instanceof Error) {
+  if (isError(result)) {
     logger.error("Failed to create a move.");
     return result;
   }

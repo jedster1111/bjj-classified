@@ -32,8 +32,9 @@ app.use(async (ctx, next) => {
   const elapsed = Date.now() - started;
   ctx.set("X-ResponseTime", elapsed.toString());
   logger[isErrorCode(ctx.response.status) ? "error" : "info"](
-    "Request finished in %sms.",
-    elapsed
+    "Request finished in %sms with %s.",
+    elapsed,
+    ctx.response.status
   );
 });
 
