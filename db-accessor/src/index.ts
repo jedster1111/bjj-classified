@@ -5,7 +5,7 @@ import {uuid} from "uuidv4"
 
 import { setUpNeo4jConnection, cleanUpNeo4jConnection } from "./store/neo4jDriver";
 import { router } from "./router";
-import { retry } from "bjj-common";
+import { retry, isErrorCode } from "bjj-common";
 import { logger, loggerKey, originalLogger } from "./logger";
 
 const port = 8000;
@@ -21,12 +21,8 @@ app.use(
   })
 )
 
-function isErrorCode(status: number) {
-  const firstDigitOfStatus = status.toString()[0];
-  return firstDigitOfStatus === "4" || firstDigitOfStatus === "5"
-}
-
 app.use(async (ctx, next) => {
+  ctx.log = logger;
   const started = Date.now();
   logger.info("Request started");
   await next();
@@ -39,7 +35,7 @@ app.use(async (ctx, next) => {
   try {
     await next()
   } catch (err) {
-    logger.error(err)
+    logger.error(err as Error, "Error encountered!")
 
     ctx.status = err.status || 500;
     ctx.body = err.message;
