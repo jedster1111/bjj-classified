@@ -3,11 +3,10 @@ import bodyParser from "koa-bodyparser"
 import { clsProxifyKoaMiddleware } from 'cls-proxify/integration/koa'
 import {uuid} from "uuidv4"
 
-// import { logger } from "./logger";
 import { setUpNeo4jConnection, cleanUpNeo4jConnection } from "./store/neo4jDriver";
 import { router } from "./router";
 import { retry } from "bjj-common";
-import { logger, loggerKey } from "./logger";
+import { logger, loggerKey, originalLogger } from "./logger";
 
 const port = 8000;
 
@@ -15,23 +14,35 @@ const app = new Koa();
 
 app.use(
   clsProxifyKoaMiddleware(loggerKey, (ctx) => {
-    const headerRequestId = ctx.request.header.traceparent || uuid()
-    const loggerProxy = {
-      info: (...args: any[]) => console.log(`${headerRequestId} proxy info`, ...args),
-      error: (...args: any[]) => console.log(`${headerRequestId} proxy error`, ...args)
-    }
-
+    const traceId = ctx.request.header["X-TraceId"] || uuid()
+    ctx.set("X-TraceId", traceId)
+    const loggerProxy = originalLogger.child({traceId: traceId})
     return loggerProxy
   })
 )
+
+function isErrorCode(status: number) {
+  const firstDigitOfStatus = status.toString()[0];
+  return firstDigitOfStatus === "4" || firstDigitOfStatus === "5"
+}
+
+app.use(async (ctx, next) => {
+  const started = Date.now();
+  logger.info("Request started");
+  await next();
+  const elapsed = Date.now() - started;
+  ctx.set('X-ResponseTime', elapsed.toString())
+  logger[isErrorCode(ctx.response.status) ? "error" :"info"]("Request finished in %sms.", elapsed);
+})
 
 app.use(async (ctx, next) => {
   try {
     await next()
   } catch (err) {
     logger.error(err)
-    ctx.throw(err.status || 500, err.message)
-    ctx.app.emit('error', err, ctx);
+
+    ctx.status = err.status || 500;
+    ctx.body = err.message;
   }
 })
 
