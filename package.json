@@ -6,12 +6,25 @@
   "author": "Jed Thompson <jedster1111@hotmail.co.uk>",
   "license": "MIT",
   "private": true,
-  "workspaces": ["db-accessor", "bjj-common", "frontend"],
+  "workspaces": [
+    "db-accessor",
+    "bjj-common",
+    "frontend"
+  ],
   "devDependencies": {
     "typescript": "^3.9.3"
   },
+  "dependencies": {
+    "husky": "^4.2.5"
+  },
   "scripts": {
     "start-supporting-services": "docker-compose up -d",
-    "stop-supporting-services": "docker-compose down"
+    "stop-supporting-services": "docker-compose down",
+    "pre-commit": "yarn workspace db-accessor lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn pre-commit"
+    }
   }
 }

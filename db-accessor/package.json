@@ -38,6 +38,7 @@
     "build": "tsc -b",
     "build:watch": "yarn build --watch",
     "run:dev": "nodemon node ./dist/index.js",
-    "lint": "eslint './src/**/*.{js,ts,tsx}'"
+    "lint": "eslint './src/**/*.{js,ts,tsx}'",
+    "lint:fix": "yarn lint --fix"
   }
 }
