@@ -17,7 +17,7 @@ export async function useTransaction<T>(
     return result;
   } catch (e) {
     const exception: Error = e;
-    logger.error(exception, "Error during transaction, rolling back.");
+    logger.error(e, "Error during transaction, rolling back.");
     return exception;
   }
 }

@@ -5,13 +5,23 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Attach",
+      "port": 9229,
+      "request": "attach",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "pwa-node"
+    },
+    {
       "type": "node",
       "request": "launch",
       "name": "Launch db-accessor",
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/db-accessor/dist/index.js"
+      "program": "${workspaceFolder}/db-accessor/dist/index.js",
+      "outputCapture": "std"
     }
   ]
 }

@@ -8,7 +8,7 @@ import {
   cleanUpNeo4jConnection,
 } from "./store/neo4jDriver";
 import { router } from "./router";
-import { retry, isErrorCode } from "bjj-common";
+import { retry } from "bjj-common";
 import { logger, loggerKey, originalLogger } from "./logger";
 
 const port = 8000;
@@ -31,7 +31,7 @@ app.use(async (ctx, next) => {
   await next();
   const elapsed = Date.now() - started;
   ctx.set("X-ResponseTime", elapsed.toString());
-  logger[isErrorCode(ctx.response.status) ? "error" : "info"](
+  logger.info(
     "Request finished in %sms with %s.",
     elapsed,
     ctx.response.status
