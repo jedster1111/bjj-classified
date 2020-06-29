@@ -4,7 +4,7 @@ import { logger } from "../logger";
 export async function useSession<T>(
   driver: Driver,
   sessionType: SessionMode | undefined,
-  callback: (session: Session) => Promise<T | Error>
+  callback: (session: Session) => Promise<T>
 ): Promise<T | Error> {
   logger.info("Creating a session. sessionType is %s", sessionType);
   const session = driver.session({ defaultAccessMode: sessionType });

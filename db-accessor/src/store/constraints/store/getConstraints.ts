@@ -1,23 +1,21 @@
 import { logger } from "../../../logger";
-import { MoveDto } from "../Move";
 import { getDriver } from "../../neo4jDriver";
 import { useSession } from "../../useSession";
 import { useTransaction } from "../../useTransaction";
 import { isError } from "bjj-common";
-import { runGetMove } from "../runs/runGetMove";
+import { runGetConstraints } from "../run/runGetConstraints";
 
-export async function getMove(id: string): Promise<MoveDto | null | Error> {
-  logger.info("Fetching move with id: %s.", id);
-
+export async function getConstraints(): Promise<Set<string> | Error> {
+  logger.info("Fetching constraints.");
   const driver = getDriver();
   if (!driver) return new Error("Db driver does not exist.");
 
-  const result = await useSession(driver, "READ", (session) =>
-    useTransaction(session, (tx) => runGetMove(tx, id))
+  const result = await useSession(driver, "WRITE", (session) =>
+    useTransaction(session, runGetConstraints)
   );
 
   if (isError(result)) return result;
 
-  logger.info("Move with id %s found.", id);
+  logger.info("Got constraints. %o", result);
   return result;
 }
