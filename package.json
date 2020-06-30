@@ -22,7 +22,9 @@
   "scripts": {
     "start-supporting-services": "docker-compose up -d",
     "stop-supporting-services": "docker-compose down",
-    "pre-commit": "yarn workspace db-accessor lint"
+    "pre-commit": "yarn workspace db-accessor lint",
+    "build-ts": "tsc -b",
+    "build-ts:watch": "yarn build-ts --watch"
   },
   "husky": {
     "hooks": {
