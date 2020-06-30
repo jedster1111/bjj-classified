@@ -1,0 +1,11 @@
+{
+  "cSpell.words": [
+    "pino"
+  ],
+  "eslint.workingDirectories": [
+    "db-accessor",
+    "frontend"
+  ],
+  "eslint.enable": true,
+  "debug.node.autoAttach": "off"
+}

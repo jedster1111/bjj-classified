@@ -1,5 +1,5 @@
 node_modules
 dist
 tsconfig.tsbuildinfo
-.vscode/settings.json
 yarn-error.log
+tsc-dist

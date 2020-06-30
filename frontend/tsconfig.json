@@ -1,7 +1,10 @@
 {
   "extends": "../tsconfig-base.json",
   "compilerOptions": {
-    "target": "es5",
+    "outDir": "./tsc-dist",
+    "sourceMap": true,
+    
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -13,11 +16,11 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
+    "composite": true,
     "jsx": "react"
   },
   "include": [
@@ -25,7 +28,7 @@
   ],
   "references": [
     {
-    "path": "../bjj-common"
+      "path": "../bjj-common"
     }
   ]
   
