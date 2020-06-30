@@ -1,7 +1,8 @@
 import React from "react";
 import { meaningOfLife } from "bjj-common";
-import { BrowserRouter, Link, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { MovePage } from "./pages/MovePage";
+import { Header } from "./header/Header";
 
 const HomePage = () => (
   <header className="App-header">
@@ -24,16 +25,7 @@ function App(): JSX.Element {
   return (
     <BrowserRouter>
       <div className="App">
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/moves">Moves</Link>
-            </li>
-          </ul>
-        </nav>
+        <Header />
         <Switch>
           <Route path="/meaningOfLife">
             <div>{meaningOfLife()}</div>
