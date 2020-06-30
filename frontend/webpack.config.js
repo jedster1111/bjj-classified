@@ -13,14 +13,13 @@ module.exports = {
     extensions: [".js", ".ts", ".tsx"]
   },
   output: {
-    path: path.join(__dirname, 'dist/assets'),
-    publicPath: './assets',
+    path: path.join(__dirname, 'dist'),
     filename: "index_bundle.js",
   },
   plugins: [
     new HtmlWebpackPlugin({
         template: path.join(__dirname, "public/index.html") ,
-        filename: '../index.html'
+        filename: './index.html'
     })
   ],
   module: {
@@ -53,7 +52,7 @@ module.exports = {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 8080,
-    publicPath: "/assets",
+    publicPath: "/",
     historyApiFallback: true
   }
 };
