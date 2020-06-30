@@ -12,14 +12,6 @@ type NavLinkProps = {
   children: string;
 };
 
-function getBackgroundColour({ isActive }: NavLinkProps): string {
-  return isActive ? "red" : "cornflowerblue";
-}
-
-function getBackgroundColourWhenHovered({ isActive }: NavLinkProps): string {
-  return isActive ? "lightCoral" : "#a9c4f5";
-}
-
 const NavLink = styled(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ isActive, ...rest }: NavLinkProps) => <Link {...rest} />
@@ -29,11 +21,20 @@ const NavLink = styled(
   padding: 14px 16px;
   text-decoration: none;
   color: #f2f2f2;
+  margin: 2px 2px;
 
   :hover {
     background-color: ${getBackgroundColourWhenHovered};
   }
 `;
+
+function getBackgroundColour({ isActive }: NavLinkProps): string {
+  return isActive ? "#E9926D" : "cornflowerblue";
+}
+
+function getBackgroundColourWhenHovered({ isActive }: NavLinkProps): string {
+  return isActive ? "#EEA98C" : "#a9c4f5";
+}
 
 type MyLinkProps = {
   to: string;

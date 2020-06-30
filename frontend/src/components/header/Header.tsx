@@ -5,6 +5,11 @@ import styled from "styled-components";
 const StyledHeader = styled.header`
   display: grid;
   border: solid 1px black;
+  background-color: #36494e;
+
+  margin: 5px;
+  border-radius: 7px;
+  padding: 3px;
 `;
 
 export const Header = (): JSX.Element => {

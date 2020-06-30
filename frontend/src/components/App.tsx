@@ -4,11 +4,24 @@ import { MovePage } from "./pages/MovePage";
 import { Header } from "./header/Header";
 import { HomePage } from "./pages/HomePage";
 import { MeaningOfLifePage } from "./pages/MeaningOfLifePage";
+import styled from "styled-components";
+import { GlobalCss } from "./globalCss/GlobalCss";
+
+const StyledApp = styled.div`
+  display: block;
+  background-color: #afd0bf;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+`;
 
 function App(): JSX.Element {
   return (
     <BrowserRouter>
-      <div>
+      <GlobalCss />
+      <StyledApp>
         <Header />
         <Switch>
           <Route path="/meaningOfLife">
@@ -21,7 +34,7 @@ function App(): JSX.Element {
             <HomePage />
           </Route>
         </Switch>
-      </div>
+      </StyledApp>
     </BrowserRouter>
   );
 }
