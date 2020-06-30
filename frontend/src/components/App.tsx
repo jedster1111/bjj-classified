@@ -1,34 +1,18 @@
 import React from "react";
-import { meaningOfLife } from "bjj-common";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { MovePage } from "./pages/MovePage";
 import { Header } from "./header/Header";
-
-const HomePage = () => (
-  <header className="App-header">
-    <p>
-      Edit <code>src/App.tsx</code> and save to reload. The meaning of life:{" "}
-      {meaningOfLife()}!
-    </p>
-    <a
-      className="App-link"
-      href="https://reactjs.org"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Learn React
-    </a>
-  </header>
-);
+import { HomePage } from "./pages/HomePage";
+import { MeaningOfLifePage } from "./pages/MeaningOfLifePage";
 
 function App(): JSX.Element {
   return (
     <BrowserRouter>
-      <div className="App">
+      <div>
         <Header />
         <Switch>
           <Route path="/meaningOfLife">
-            <div>{meaningOfLife()}</div>
+            <MeaningOfLifePage />
           </Route>
           <Route path="/moves">
             <MovePage />

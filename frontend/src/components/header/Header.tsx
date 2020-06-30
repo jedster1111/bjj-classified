@@ -14,6 +14,7 @@ export const Header = (): JSX.Element => {
         links={[
           { to: "/", displayText: "BJJC", exact: true },
           { to: "/moves", displayText: "Moves" },
+          { to: "/meaningOfLife", displayText: "Meaning of Life" },
         ]}
       />
     </StyledHeader>
