@@ -22,6 +22,8 @@ const NavLink = styled(
   text-decoration: none;
   color: #f2f2f2;
   margin: 2px 2px;
+  border-radius: 3px;
+  border: solid 1px #e2efde;
 
   :hover {
     background-color: ${getBackgroundColourWhenHovered};
