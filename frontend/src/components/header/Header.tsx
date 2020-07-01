@@ -3,6 +3,8 @@ import { NavLinks } from "./NavLinks";
 import styled from "styled-components";
 
 const StyledHeader = styled.header`
+  width: 100%;
+  max-width: 1600px;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: center;

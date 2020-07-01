@@ -1,6 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { MoveDto } from "bjj-common";
 import { getMoves } from "../../api";
+import styled from "styled-components";
+
+const MovePageContainer = styled.div`
+  height: 100%;
+`;
+
+const MovesList = styled.ul`
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  column-gap: 2em;
+  row-gap: 1.4em;
+`;
+
+const Move = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 35px;
+  /* width: 150px;
+  height: 100px; */
+  border: solid black 1px;
+  border-radius: 5px;
+  background-color: #8ef9f3;
+  text-align: center;
+`;
 
 export const MovePage = (): JSX.Element => {
   const [moves, setMoves] = useState<MoveDto[]>();
@@ -29,13 +56,12 @@ export const MovePage = (): JSX.Element => {
   if (!moves.length) return <div>There are no moves in the db currently?</div>;
 
   return (
-    <div>
-      Moves!
-      <ul>
+    <MovePageContainer>
+      <MovesList>
         {moves.map((move) => (
-          <li key={move.id}>{move.name}</li>
+          <Move key={move.id}>{move.name}</Move>
         ))}
-      </ul>
-    </div>
+      </MovesList>
+    </MovePageContainer>
   );
 };

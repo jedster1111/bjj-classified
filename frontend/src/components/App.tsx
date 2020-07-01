@@ -10,6 +10,7 @@ import { GlobalCss } from "./globalCss/GlobalCss";
 const StyledApp = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   background-color: #afd0bf;
 
@@ -21,6 +22,8 @@ const StyledApp = styled.div`
 
 const Main = styled.div`
   flex: 1;
+  max-width: 1600px;
+  width: 100%;
 
   margin: 5px;
   padding: 3px;
