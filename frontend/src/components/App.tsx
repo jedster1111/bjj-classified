@@ -8,7 +8,9 @@ import styled from "styled-components";
 import { GlobalCss } from "./globalCss/GlobalCss";
 
 const StyledApp = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: column;
+
   background-color: #afd0bf;
 
   position: absolute;
@@ -17,23 +19,32 @@ const StyledApp = styled.div`
   width: 100%;
 `;
 
+const Main = styled.div`
+  flex: 1;
+
+  margin: 5px;
+  padding: 3px;
+`;
+
 function App(): JSX.Element {
   return (
     <BrowserRouter>
       <GlobalCss />
       <StyledApp>
         <Header />
-        <Switch>
-          <Route path="/meaningOfLife">
-            <MeaningOfLifePage />
-          </Route>
-          <Route path="/moves">
-            <MovePage />
-          </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
-        </Switch>
+        <Main>
+          <Switch>
+            <Route path="/meaningOfLife">
+              <MeaningOfLifePage />
+            </Route>
+            <Route path="/moves">
+              <MovePage />
+            </Route>
+            <Route path="/">
+              <HomePage />
+            </Route>
+          </Switch>
+        </Main>
       </StyledApp>
     </BrowserRouter>
   );
