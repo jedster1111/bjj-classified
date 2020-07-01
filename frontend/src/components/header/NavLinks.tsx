@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const Nav = styled.nav`
   display: inline-block;
+  margin-left: 2px;
 `;
 
 type NavLinkProps = {
@@ -21,9 +22,16 @@ const NavLink = styled(
   padding: 14px 16px;
   text-decoration: none;
   color: #f2f2f2;
-  margin: 2px 2px;
-  border-radius: 3px;
-  border: solid 1px #e2efde;
+  margin: 2px 0px;
+  font-size: 1.2em;
+
+  :first-child {
+    border-radius: 7px 0 0 7px;
+  }
+
+  :last-child {
+    border-radius: 0 7px 7px 0;
+  }
 
   :hover {
     background-color: ${getBackgroundColourWhenHovered};
