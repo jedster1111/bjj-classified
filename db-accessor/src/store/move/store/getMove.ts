@@ -1,9 +1,8 @@
 import { logger } from "../../../logger";
-import { MoveDto } from "../Move";
 import { getDriver } from "../../neo4jDriver";
 import { useSession } from "../../useSession";
 import { useTransaction } from "../../useTransaction";
-import { isError } from "bjj-common";
+import { isError, MoveDto } from "bjj-common";
 import { runGetMove } from "../runs/runGetMove";
 
 export async function getMove(id: string): Promise<MoveDto | null | Error> {

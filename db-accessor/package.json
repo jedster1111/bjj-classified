@@ -25,7 +25,7 @@
     "bjj-common": "1.0.0",
     "cls-hooked": "^4.2.2",
     "cls-proxify": "^1.0.1",
-    "io-ts": "^2.2.6",
+    "io-ts": "^2.2.7",
     "io-ts-reporters": "^1.2.0",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",

@@ -1,6 +1,6 @@
 import { Transaction } from "neo4j-driver";
 import { logger } from "../../../logger";
-import { DbMoveDto } from "../Move";
+import { DbMoveDto } from "../MoveDtos";
 import { nodeToMoveDto } from "../dbToDtoConverters/nodeToMoveDto";
 
 export async function runGetMove(

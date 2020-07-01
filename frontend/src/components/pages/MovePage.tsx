@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-type MoveDto = {
-  id: string;
-  name: string;
-};
-
-async function getMoves() {
-  return axios.get<MoveDto[]>("http://localhost:8000/moves");
-}
+import { MoveDto } from "bjj-common";
+import { getMoves } from "../../api";
 
 export const MovePage = (): JSX.Element => {
   const [moves, setMoves] = useState<MoveDto[]>();

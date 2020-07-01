@@ -3,8 +3,8 @@ import { logger } from "../../../logger";
 import { runCreateMove } from "../runs/runCreateMove";
 import { useSession } from "../../useSession";
 import { useTransaction } from "../../useTransaction";
-import { MoveDto, DbMoveDto } from "../Move";
-import { isError } from "bjj-common";
+import { DbMoveDto } from "../MoveDtos";
+import { isError, MoveDto } from "bjj-common";
 
 export async function createMove(moveDto: DbMoveDto): Promise<MoveDto | Error> {
   logger.info("Creating a move.");

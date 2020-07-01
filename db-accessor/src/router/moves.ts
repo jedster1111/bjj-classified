@@ -1,7 +1,6 @@
 import KoaRouter from "koa-router";
-import { isError } from "bjj-common";
+import { isError, createMoveDtoValidator } from "bjj-common";
 
-import { createMoveDtoValidator } from "../store/move/validators";
 import { createMove } from "../store/move/store/createMove";
 import { getMoves } from "../store/move/store/getMoves";
 import { uuid } from "uuidv4";
