@@ -11,7 +11,5 @@ export async function runCreateMove(
   const queryResult = await tx.run("CREATE (move:Move $moveDto) RETURN move", {
     moveDto,
   });
-  const move = nodeToMoveDto(queryResult.records[0].get("move"));
-
-  return move;
+  return nodeToMoveDto(queryResult.records[0].get("move"));
 }

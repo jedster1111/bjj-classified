@@ -1,27 +1,27 @@
-import { getDriver } from "../../neo4jDriver";
+import { DbVideoDto } from "../VideoDtos";
 import { logger } from "../../../logger";
-import { runCreateMove } from "../runs/runCreateMove";
+import { getDriver } from "../../neo4jDriver";
 import { useSession } from "../../useSession";
 import { useTransaction } from "../../useTransaction";
-import { DbMoveDto } from "../MoveDtos";
-import { isError } from "bjj-common";
+import { isError } from "util";
+import { runCreateVideo } from "../runs/runCreateVideo";
 
-export async function createMove(
-  moveDto: DbMoveDto
-): Promise<DbMoveDto | Error> {
-  logger.info("Creating a move.");
+export async function createVideo(
+  videoDto: DbVideoDto
+): Promise<DbVideoDto | Error> {
+  logger.info("Creating a video.");
   const driver = getDriver();
   if (!driver) return new Error("Db driver does not exist.");
 
   const result = await useSession(driver, "WRITE", (session) =>
     useTransaction(session, async (tx) => {
-      const createdMove = await runCreateMove(tx, moveDto);
+      const createdMove = await runCreateVideo(tx, videoDto);
       return createdMove;
     })
   );
 
   if (isError(result)) return result;
 
-  logger.info("Move created. %o", result);
+  logger.info("Video created. %o", result);
   return result;
 }
