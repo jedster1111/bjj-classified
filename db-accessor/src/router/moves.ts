@@ -6,9 +6,15 @@ import { getMoves } from "../store/move/store/getMoves";
 import { uuid } from "uuidv4";
 import { getMove } from "../store/move/store/getMove";
 
+export const movesRoutes = {
+  getMoves: "getMoves",
+  getMove: "getMove",
+  createMove: "createMove",
+} as const;
+
 const moves = new KoaRouter();
 
-moves.get("getMoves", "/", async (ctx) => {
+moves.get(movesRoutes.getMoves, "/", async (ctx) => {
   const fetchedMoves = await getMoves();
 
   if (isError(fetchedMoves)) {
@@ -19,7 +25,7 @@ moves.get("getMoves", "/", async (ctx) => {
   ctx.body = fetchedMoves;
 });
 
-moves.get("getMove", "/:id", async (ctx) => {
+moves.get(movesRoutes.getMove, "/:id", async (ctx) => {
   const { id } = ctx.params;
   const fetchedMove = await getMove(id);
 
@@ -36,7 +42,7 @@ moves.get("getMove", "/:id", async (ctx) => {
   ctx.body = fetchedMove;
 });
 
-moves.post("createMove", "/", async (ctx) => {
+moves.post(movesRoutes.createMove, "/", async (ctx) => {
   const validationResult = createMoveDtoValidator(ctx.request.body);
 
   if (isError(validationResult)) {

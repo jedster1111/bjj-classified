@@ -3,6 +3,7 @@ import KoaRouter from "koa-router";
 import { meaningOfLife } from "bjj-common";
 import { logger } from "./logger";
 import { moves } from "./router/moves";
+import { videos } from "./router/videos";
 
 const router = new KoaRouter();
 
@@ -16,5 +17,6 @@ router.get("error", "/error", async (ctx) => {
 });
 
 router.use("/moves", moves.routes(), moves.allowedMethods());
+router.use("/videos", videos.routes(), moves.allowedMethods());
 
 export { router };
