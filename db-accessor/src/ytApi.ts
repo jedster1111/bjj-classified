@@ -30,7 +30,12 @@ export async function getVideoInfo(
       id: [youtubeKey],
     });
 
-    const snippet = response.data.items?.[0].snippet;
+    const items = response.data.items;
+
+    if (!items || items.length === 0)
+      throw new Error(`No video with the Youtube key ${youtubeKey} was found.`);
+
+    const snippet = items[0].snippet;
 
     const thumbnailUrl = snippet?.thumbnails?.high?.url;
     const title = snippet?.title;
