@@ -1,5 +1,5 @@
 import Koa from "koa";
-import cors from "@koa/cors"
+import cors from "@koa/cors";
 import bodyParser from "koa-bodyparser";
 import { clsProxifyKoaMiddleware } from "cls-proxify/integration/koa";
 import { uuid } from "uuidv4";
@@ -50,11 +50,7 @@ app.use(async (ctx, next) => {
   }
 });
 
-
-
-
-
-app.use(cors())
+app.use(cors());
 
 app.use(bodyParser());
 app.use(router.routes()).use(router.allowedMethods());

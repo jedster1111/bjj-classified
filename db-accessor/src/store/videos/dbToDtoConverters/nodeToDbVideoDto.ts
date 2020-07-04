@@ -2,10 +2,18 @@ import { MyNode } from "../../types";
 import { DbVideoDto } from "../VideoDtos";
 
 export function nodeToDbVideoDto(videoNode: MyNode<DbVideoDto>): DbVideoDto {
-  const { id, name, url } = videoNode.properties;
+  const {
+    id,
+    publishedAt,
+    thumbnailUrl,
+    title,
+    youtubeKey,
+  } = videoNode.properties;
   return {
     id,
-    name,
-    url,
+    youtubeKey,
+    publishedAt,
+    thumbnailUrl,
+    title,
   };
 }

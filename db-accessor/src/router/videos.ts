@@ -3,7 +3,6 @@ import { isError } from "util";
 import { getVideos } from "../store/videos/store/getVideos";
 import { getVideo } from "../store/videos/store/getVideo";
 import { createVideoDtoValidator } from "bjj-common";
-import { uuid } from "uuidv4";
 import { createVideo } from "../store/videos/store/createVideo";
 
 export const videosRoutes = {
@@ -50,8 +49,7 @@ videos.post(videosRoutes.createVideo, "/", async (ctx) => {
     return;
   }
 
-  const dbVideoDto = { id: uuid(), ...validationResult };
-  const createdVideo = await createVideo(dbVideoDto);
+  const createdVideo = await createVideo(validationResult);
 
   if (isError(createdVideo)) {
     ctx.throw("Failed to create video.");

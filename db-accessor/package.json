@@ -25,6 +25,8 @@
     "bjj-common": "1.0.0",
     "cls-hooked": "^4.2.2",
     "cls-proxify": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "googleapis": "^52.1.0",
     "io-ts": "^2.2.7",
     "io-ts-reporters": "^1.2.0",
     "koa": "^2.13.0",
@@ -38,7 +40,7 @@
   "scripts": {
     "build": "tsc -b",
     "build:watch": "yarn build --watch",
-    "run:dev": "nodemon node --inspect ./dist/index.js",
+    "run:dev": "nodemon -r dotenv/config ./dist/index.js",
     "lint": "eslint './src/**/*.{js,ts,tsx}'",
     "lint:fix": "yarn lint --fix"
   }

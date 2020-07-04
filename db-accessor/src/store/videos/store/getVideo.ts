@@ -18,6 +18,8 @@ export async function getVideo(id: string): Promise<VideoDto | null | Error> {
 
   if (isError(result)) return result;
 
-  logger.info("Video with id %s found.", id);
+  result === null
+    ? logger.info("Video with id %s not found.", id)
+    : logger.info("Video with id %s found.", id);
   return result;
 }

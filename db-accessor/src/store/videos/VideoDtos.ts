@@ -1,5 +1,7 @@
 export type DbVideoDto = {
   id: string;
-  name: string;
-  url: string;
+  title: string;
+  youtubeKey: string;
+  thumbnailUrl: string;
+  publishedAt: string;
 };

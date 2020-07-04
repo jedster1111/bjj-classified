@@ -2,6 +2,7 @@ import neo4j, { Driver } from "neo4j-driver";
 
 import { logger } from "../logger";
 import { createMoveConstraints } from "./move/store/createMoveConstraints";
+import { createVideoConstraints } from "./videos/store/createVideoConstraints";
 
 const neo4jUrl = "bolt://127.0.0.1:7687";
 const neo4jUsername = "neo4j";
@@ -27,6 +28,7 @@ export async function setUpNeo4jConnection(): Promise<Driver> {
     );
 
     await createMoveConstraints();
+    await createVideoConstraints();
 
     return driver;
   } catch (e) {
