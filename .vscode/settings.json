@@ -1,6 +1,7 @@
 {
   "cSpell.words": [
-    "pino"
+    "pino",
+    "uuidv"
   ],
   "eslint.workingDirectories": [
     "db-accessor",

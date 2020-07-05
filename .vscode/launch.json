@@ -28,7 +28,8 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}/db-accessor/dist/index.js",
-      "outputCapture": "std"
+      "outputCapture": "std",
+      "envFile": "${workspaceFolder}/db-accessor/.env"
     }
   ]
 }
