@@ -2,24 +2,28 @@ import { Transaction } from "neo4j-driver";
 import { DbVideoDto } from "../VideoDtos";
 import { DbEventDto } from "../../events/EventDtos";
 import { logger } from "../../../logger";
-import { VideoWithEventsDto } from "bjj-common";
+import { VideoWithEventsDto, CreateVideoEventDto, MoveDto } from "bjj-common";
 
-export async function createVideoWithEvents(
+export async function runCreateVideoWithEvents(
   tx: Transaction,
   dbVideoDto: DbVideoDto,
-  events: { id: string; timestamp: number }[]
+  events: CreateVideoEventDto[]
 ): Promise<VideoWithEventsDto> {
   logger.info("Writing video to database with events");
 
   const queryResult = await tx.run(
     `
-    CREATE (video:Video $videoDto)
-    FOREACH (
-      eventDto in $events |
-      CREATE (video)<-[:WATCHABLE_IN {timestamp: eventDto.timestamp}]-(event:Event {id: eventDto.id})
-    )
-    WITH video
-    MATCH (video)<-[watchableIn:WATCHABLE_IN]-(event:Event)
+    UNWIND $events as eventDto
+    MATCH (move:Move {id: eventDto.moveId})
+    MERGE (video:Video {
+      id: $videoDto.id,
+      title: $videoDto.title,
+      youtubeKey: $videoDto.youtubeKey,
+      thumbnailUrl: $videoDto.thumbnailUrl,
+      publishedAt: $videoDto.publishedAt
+    })
+    CREATE (video)<-[watchableIn:WATCHABLE_IN {timestamp: eventDto.timestamp}]-(event:Event {id: eventDto.id})
+    CREATE (move)<-[:EXAMPLE_OF]-(event)
     RETURN *
   `,
     {
@@ -35,12 +39,17 @@ export async function createVideoWithEvents(
     const watchableIn: { timestamp: number } = record.get("watchableIn")
       .properties;
     const event: DbEventDto = record.get("event").properties;
+    const move: MoveDto = record.get("move").properties;
 
     const videoDto: VideoWithEventsDto = accum[video.id] || {
       ...video,
       events: [],
     };
-    videoDto.events.push({ ...event, timestamp: watchableIn.timestamp });
+    videoDto.events.push({
+      ...event,
+      timestamp: watchableIn.timestamp,
+      moveId: move.id,
+    });
 
     accum[video.id] = videoDto;
 

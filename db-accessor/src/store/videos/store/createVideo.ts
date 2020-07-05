@@ -6,7 +6,7 @@ import { isError } from "util";
 import { CreateVideoDto, VideoWithEventsDto } from "bjj-common";
 import { uuid } from "uuidv4";
 import { getVideoInfo } from "../../../ytApi";
-import { createVideoWithEvents } from "../runs/runCreateVideoWithEvents";
+import { runCreateVideoWithEvents } from "../runs/runCreateVideoWithEvents";
 
 export async function createVideo(
   videoDto: CreateVideoDto
@@ -20,7 +20,7 @@ export async function createVideo(
 
   const result = await useSession(driver, "WRITE", (session) =>
     useTransaction(session, async (tx) => {
-      const createdVideo = await createVideoWithEvents(
+      const createdVideo = await runCreateVideoWithEvents(
         tx,
         {
           id: uuid(),
