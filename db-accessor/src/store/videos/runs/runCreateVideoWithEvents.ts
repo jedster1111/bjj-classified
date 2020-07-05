@@ -1,8 +1,8 @@
 import { Transaction } from "neo4j-driver";
 import { DbVideoDto } from "../VideoDtos";
-import { DbEventDto } from "../../events/EventDtos";
 import { logger } from "../../../logger";
-import { VideoWithEventsDto, CreateVideoEventDto, MoveDto } from "bjj-common";
+import { VideoWithEventsDto, CreateVideoEventDto } from "bjj-common";
+import { queryResultToVideosById } from "../../queryResultToVideosById";
 
 export async function runCreateVideoWithEvents(
   tx: Transaction,
@@ -32,29 +32,7 @@ export async function runCreateVideoWithEvents(
     }
   );
 
-  const reducedResult = queryResult.records.reduce<{
-    [videoId: string]: VideoWithEventsDto;
-  }>((accum, record) => {
-    const video: DbVideoDto = record.get("video").properties;
-    const watchableIn: { timestamp: number } = record.get("watchableIn")
-      .properties;
-    const event: DbEventDto = record.get("event").properties;
-    const move: MoveDto = record.get("move").properties;
-
-    const videoDto: VideoWithEventsDto = accum[video.id] || {
-      ...video,
-      events: [],
-    };
-    videoDto.events.push({
-      ...event,
-      timestamp: watchableIn.timestamp,
-      moveId: move.id,
-    });
-
-    accum[video.id] = videoDto;
-
-    return accum;
-  }, {});
+  const reducedResult = queryResultToVideosById(queryResult);
 
   return reducedResult[dbVideoDto.id];
 }
