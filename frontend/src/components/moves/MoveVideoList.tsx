@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
-import { VideoWithEventsDto } from "bjj-common";
+import { VideoWithEventsDto, getYoutubeLinkFromKey } from "bjj-common";
 import { getMoveVideos } from "../../api";
 
 export const MoveVideoList = (): JSX.Element => {
@@ -34,7 +34,15 @@ export const MoveVideoList = (): JSX.Element => {
   return (
     <ul>
       {videos.map((video) => (
-        <li key={video.id}>{video.title}</li>
+        <li key={video.id}>
+          <a
+            href={getYoutubeLinkFromKey(video.youtubeKey)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {video.title}
+          </a>
+        </li>
       ))}
     </ul>
   );
