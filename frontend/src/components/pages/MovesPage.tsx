@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { MoveDto } from "bjj-common";
 import { getMoves } from "../../api";
 import styled from "styled-components";
+import { useRouteMatch, Route, useHistory } from "react-router-dom";
+import { MoveVideoList } from "../moves/MoveVideoList";
 
 const MovePageContainer = styled.div`
   height: 100%;
@@ -16,20 +18,31 @@ const MovesList = styled.ul`
   row-gap: 1.4em;
 `;
 
-const Move = styled.li`
+const MoveListElement = styled.li``;
+
+const MoveButton = styled.button`
+  width: 100%;
+  height: 100%;
+  padding: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 35px;
-  /* width: 150px;
-  height: 100px; */
   border: solid black 1px;
   border-radius: 5px;
   background-color: #8ef9f3;
   text-align: center;
 `;
 
-export const MovePage = (): JSX.Element => {
+const MoveVideosListContainer = styled.div`
+  width: 800px;
+  padding: 25px;
+  margin: auto;
+`;
+
+export const MovesPage = (): JSX.Element => {
+  const { path } = useRouteMatch();
+  const history = useHistory();
+
   const [moves, setMoves] = useState<MoveDto[]>();
   const [error, setError] = useState<Error>();
 
@@ -55,13 +68,28 @@ export const MovePage = (): JSX.Element => {
 
   if (!moves.length) return <div>There are no moves in the db currently?</div>;
 
+  const handleMoveClick = (moveId: string) => {
+    history.push(`${path}/${moveId}`);
+  };
+
   return (
     <MovePageContainer>
       <MovesList>
         {moves.map((move) => (
-          <Move key={move.id}>{move.name}</Move>
+          <MoveListElement
+            key={move.id}
+            onClick={() => handleMoveClick(move.id)}
+          >
+            <MoveButton>{move.name}</MoveButton>
+          </MoveListElement>
         ))}
       </MovesList>
+
+      <Route path={`${path}/:moveId`}>
+        <MoveVideosListContainer>
+          <MoveVideoList />
+        </MoveVideosListContainer>
+      </Route>
     </MovePageContainer>
   );
 };

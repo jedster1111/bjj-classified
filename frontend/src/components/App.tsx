@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { MovePage } from "./pages/MovePage";
+import { MovesPage } from "./pages/MovesPage";
 import { Header } from "./header/Header";
 import { HomePage } from "./pages/HomePage";
 import { MeaningOfLifePage } from "./pages/MeaningOfLifePage";
@@ -40,8 +40,8 @@ function App(): JSX.Element {
             <Route path="/meaningOfLife">
               <MeaningOfLifePage />
             </Route>
-            <Route path="/moves">
-              <MovePage />
+            <Route path="/moves" exact={false}>
+              <MovesPage />
             </Route>
             <Route path="/">
               <HomePage />
