@@ -7,12 +7,6 @@ yarn
 
 ## Running locally
 
-Build all TS in watch mode. This means updates to `bjj-common` will be reflected
-in both the `frontend` and `db-accessor` projects.
-```sh
-yarn build-ts:watch
-```
-
 ### frontend
 
 ```sh
@@ -22,12 +16,15 @@ yarn start
 The `frontend` project should open in a browser and refresh whenever you update a file.
 
 ### db-accessor
+
+#### Neo4j
+
 ```sh
 yarn start-supporting-services
 ```
 **Note:** The above command relies on Docker running since it uses `docker-compose`.
 
-Spin up a neo4j instance, with username `neo4j` and password `test`.
+The above command spins up a neo4j instance, with username `neo4j` and password `test`.
 
 You can access the web interface at http://localhost:7474/
 ```
@@ -38,11 +35,22 @@ Password: test
 ```
 ![neo4j browser config example](docs/images/neo4j%20browser%20example.png)
 
-Rename `db-accessor/.env.template` to `db-accessor/.env` and replace the temporary value with a real YouTube api key.  
+#### YouTube Api
+
+Rename `db-accessor/.env.template` to `db-accessor/.env` and replace the example value with a real YouTube api key.  
 Follow https://developers.google.com/youtube/v3/getting-started for instructions on how to get an api key.
 
-Start `db-accessor` service
+#### Db-accessor Service
+
 ```sh
 cd db-accessor
+```
+
+Build and watch for changes:
+```sh
+yarn build:watch
+```
+Start the `db-accessor` service with:
+```sh
 yarn run:dev 
 ```
