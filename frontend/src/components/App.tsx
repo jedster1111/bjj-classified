@@ -37,14 +37,17 @@ function App(): JSX.Element {
         <Header />
         <Main>
           <Switch>
-            <Route path="/meaningOfLife">
+            <Route path="/meaningOfLife" exact>
               <MeaningOfLifePage />
             </Route>
-            <Route path="/moves" exact={false}>
+            <Route path="/moves">
               <MovesPage />
             </Route>
-            <Route path="/">
+            <Route path="/" exact>
               <HomePage />
+            </Route>
+            <Route path="*">
+              <div>404 - Are you lost?</div>
             </Route>
           </Switch>
         </Main>
