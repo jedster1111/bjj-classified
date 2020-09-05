@@ -8,5 +8,6 @@
     "frontend"
   ],
   "eslint.enable": true,
-  "debug.node.autoAttach": "off"
+  "debug.node.autoAttach": "off",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
