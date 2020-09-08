@@ -27,6 +27,11 @@ const StyledReactPlayer = styled(ReactPlayer)`
   left: 0;
 `;
 
+const VideoTitle = styled.span`
+  font-size: 32px;
+  margin-bottom: 16px;
+`;
+
 export const VideoPage = (): JSX.Element => {
   const playerRef = useRef<ReactPlayer>(null!);
 
@@ -43,7 +48,7 @@ export const VideoPage = (): JSX.Element => {
 
   return (
     <VideoPageContainer>
-      <span>{video.title}</span>
+      <VideoTitle>{video.title}</VideoTitle>
       <PlayerWrapper>
         <StyledReactPlayer
           ref={playerRef}
