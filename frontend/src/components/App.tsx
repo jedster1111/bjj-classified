@@ -6,6 +6,7 @@ import { HomePage } from "./pages/HomePage";
 import { MeaningOfLifePage } from "./pages/MeaningOfLifePage";
 import styled from "styled-components";
 import { GlobalCss } from "./globalCss/GlobalCss";
+import { VideoPage } from "./pages/VideoPage";
 
 const StyledApp = styled.div`
   display: flex;
@@ -42,6 +43,9 @@ function App(): JSX.Element {
             </Route>
             <Route path="/moves">
               <MovesPage />
+            </Route>
+            <Route path="/videos/:videoId">
+              <VideoPage />
             </Route>
             <Route path="/" exact>
               <HomePage />

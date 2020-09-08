@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { MoveDto } from "bjj-common";
-import { getMoves } from "../../api";
+import React from "react";
 import styled from "styled-components";
 import { useRouteMatch, Route, useHistory } from "react-router-dom";
+import { getMoves } from "../../api";
 import { MoveVideoList } from "../moves/MoveVideoList";
+import { useLoadData } from "../../hooks/useLoadData";
 
 const MovePageContainer = styled.div`
   height: 100%;
@@ -43,30 +43,13 @@ export const MovesPage = (): JSX.Element => {
   const { path } = useRouteMatch();
   const history = useHistory();
 
-  const [moves, setMoves] = useState<MoveDto[]>();
-  const [error, setError] = useState<Error>();
+  const [isLoading, error, moves] = useLoadData(getMoves);
 
-  useEffect(() => {
-    console.log(moves);
-    async function handleLoad() {
-      try {
-        const moves = (await getMoves()).data;
-        console.log(moves);
-        setMoves(moves);
-      } catch (e) {
-        console.log(e);
-        setError(e);
-      }
-    }
-
-    handleLoad();
-  }, []);
+  if (isLoading === undefined || isLoading) return <div>Loading...</div>;
 
   if (error) return <div>Whoops, is the backend running?</div>;
 
-  if (!moves) return <div>Loading...</div>;
-
-  if (!moves.length) return <div>There are no moves in the db currently?</div>;
+  if (!moves?.length) return <div>There are no moves in the db currently?</div>;
 
   const handleMoveClick = (moveId: string) => {
     history.push(`${path}/${moveId}`);
