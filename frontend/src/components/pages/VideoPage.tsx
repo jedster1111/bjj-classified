@@ -28,7 +28,7 @@ const StyledReactPlayer = styled(ReactPlayer)`
 `;
 
 export const VideoPage = (): JSX.Element => {
-  const playerRef = useRef<ReactPlayer>(null);
+  const playerRef = useRef<ReactPlayer>(null!);
 
   const { videoId } = useParams<{ videoId: string }>();
 
