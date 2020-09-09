@@ -1,4 +1,5 @@
 import * as t from "io-ts";
+import { MoveDto } from "../Move/MoveDtos";
 
 export const CreateVideoEventsCodec = t.type({
   timestamp: t.number,
@@ -13,10 +14,10 @@ export const CreateVideoDtoCodec = t.type({
 export type CreateVideoDto = t.TypeOf<typeof CreateVideoDtoCodec>;
 export type CreateVideoEventDto = t.TypeOf<typeof CreateVideoEventsCodec>;
 
-export type VideoEvent = {
+export type VideoEventDto = {
   id: string;
   timestamp: number;
-  moveId: string;
+  move: MoveDto;
 };
 
 export type VideoDto = {
@@ -28,5 +29,5 @@ export type VideoDto = {
 };
 
 export type VideoWithEventsDto = VideoDto & {
-  events: VideoEvent[];
+  events: VideoEventDto[];
 };

@@ -25,7 +25,7 @@ export function queryResultToVideosById(
       videoDto.events.push({
         ...event,
         timestamp: watchableIn.timestamp,
-        moveId: move.id,
+        move,
       });
 
       accum[video.id] = videoDto;

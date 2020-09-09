@@ -1,9 +1,8 @@
-import { VideoDto } from "bjj-common";
+import { VideoDto, isError } from "bjj-common";
 import { logger } from "../../../logger";
 import { getDriver } from "../../neo4jDriver";
 import { useSession } from "../../useSession";
 import { useTransaction } from "../../useTransaction";
-import { isError } from "util";
 import { runGetVideo } from "../runs/runGetVideo";
 
 export async function getVideo(id: string): Promise<VideoDto | null | Error> {

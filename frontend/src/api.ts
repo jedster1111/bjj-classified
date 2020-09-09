@@ -1,4 +1,9 @@
-import { MoveDto, VideoDto, VideoWithEventsDto } from "bjj-common";
+import {
+  MoveDto,
+  VideoDto,
+  VideoEventDto,
+  VideoWithEventsDto,
+} from "bjj-common";
 import axios from "axios";
 
 export function getMoves() {
@@ -13,4 +18,10 @@ export function getMoveVideos(moveId: string) {
 
 export function getVideo(videoId: string) {
   return axios.get<VideoDto>(`http://localhost:8000/videos/${videoId}`);
+}
+
+export function getVideoEvents(videoId: string) {
+  return axios.get<VideoEventDto[]>(
+    `http://localhost:8000/videos/${videoId}/events`
+  );
 }

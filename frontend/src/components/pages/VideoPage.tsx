@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useLoadData } from "../../hooks/useLoadData";
 import { getVideo } from "../../api";
 import { getYoutubeLinkFromKey } from "bjj-common";
+import { EventsList } from "../events/EventsList";
 
 const VideoPageContainer = styled.div`
   height: 100%;
@@ -33,16 +34,17 @@ const VideoTitle = styled.span`
 `;
 
 export const VideoPage = (): JSX.Element => {
-  const playerRef = useRef<ReactPlayer>(null!);
+  const playerRef = useRef<ReactPlayer>(null);
 
   const { videoId } = useParams<{ videoId: string }>();
 
   const getVideoMemo = useCallback(() => getVideo(videoId), [videoId]);
-  const [isLoading, error, video] = useLoadData(getVideoMemo);
+  const [isVideoLoading, loadingVideoError, video] = useLoadData(getVideoMemo);
 
-  if (isLoading === undefined || isLoading) return <div>Loading...</div>;
+  if (isVideoLoading === undefined || isVideoLoading)
+    return <div>Loading...</div>;
 
-  if (error) return <div>Whoops: {error.message}</div>;
+  if (loadingVideoError) return <div>Whoops: {loadingVideoError.message}</div>;
 
   if (!video) return <div>That video doesn&apost exist?</div>;
 
@@ -59,6 +61,10 @@ export const VideoPage = (): JSX.Element => {
           height="100%"
         />
       </PlayerWrapper>
+      <EventsList
+        videoId={videoId}
+        seekToTime={(time) => playerRef.current?.seekTo(time)}
+      />
     </VideoPageContainer>
   );
 };

@@ -1,14 +1,15 @@
 import KoaRouter from "koa-router";
-import { isError } from "util";
 import { getVideos } from "../store/videos/store/getVideos";
 import { getVideo } from "../store/videos/store/getVideo";
-import { createVideoDtoValidator } from "bjj-common";
+import { createVideoDtoValidator, isError } from "bjj-common";
 import { createVideo } from "../store/videos/store/createVideo";
+import { getVideoEvents } from "../store/videos/store/getVideoEvents";
 
 export const videosRoutes = {
   getVideos: "getVideos",
   getVideo: "getVideo",
   createVideo: "createVideo",
+  getVideoEvents: "getVideoEvents",
 };
 
 export const videos = new KoaRouter();
@@ -39,6 +40,25 @@ videos.get(videosRoutes.getVideo, "/:id", async (ctx) => {
   }
 
   ctx.body = fetchedVideo;
+});
+
+videos.get(videosRoutes.getVideoEvents, "/:id/events", async (ctx) => {
+  const { id } = ctx.params;
+  const fetchedEvents = await getVideoEvents(id);
+
+  if (isError(fetchedEvents)) {
+    ctx.throw(
+      "There was an error fetching the events for a video from the db."
+    );
+    return;
+  }
+
+  if (!fetchedEvents) {
+    ctx.status = 404;
+    return;
+  }
+
+  ctx.body = fetchedEvents;
 });
 
 videos.post(videosRoutes.createVideo, "/", async (ctx) => {
