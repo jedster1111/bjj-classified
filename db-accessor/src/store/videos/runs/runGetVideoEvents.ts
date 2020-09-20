@@ -12,7 +12,7 @@ export async function runGetVideoEvents(
     `
       MATCH (:Video { id: $id })<-[watchableIn:WATCHABLE_IN]-(event:Event)-[:EXAMPLE_OF]->(move:Move)
       RETURN event.id as eventId, watchableIn.timestamp as timestamp, move
-      ORDER BY timestamp DESC
+      ORDER BY timestamp ASC
     `,
     { id }
   );
